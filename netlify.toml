@@ -2,6 +2,12 @@
   publish = "."
   functions = "netlify/functions"
 
+[functions]
+  node_bundler = "esbuild"
+
+[functions."analyse"]
+  timeout = 26
+
 [[redirects]]
   from = "/analyse-api"
   to = "/.netlify/functions/analyse"
