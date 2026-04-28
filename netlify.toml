@@ -6,7 +6,10 @@
   node_bundler = "esbuild"
 
 [functions."analyse"]
-  timeout = 26
+  timeout = 60
+
+[functions."subscribe"]
+  timeout = 15
 
 [[redirects]]
   from = "/analyse-api"
