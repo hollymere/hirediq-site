@@ -323,13 +323,48 @@ textarea::placeholder{color:var(--slate)}
       </div>
     </div>
 
-    <!-- CV Rewrite -->
+    <!-- ATS Analysis -->
+    <div class="result-card-full">
+      <div class="result-head">
+        <span class="result-head-title" style="color:var(--blue)">ATS Keyword Analysis</span>
+        <span style="font-size:0.7rem;color:var(--slate);font-weight:400">Keywords the algorithm scans for</span>
+      </div>
+      <div class="result-body">
+        <div style="margin-bottom:1.25rem">
+          <div style="font-size:0.75rem;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.625rem">Keywords Present in Your CV</div>
+          <div id="ats-present" style="display:flex;flex-wrap:wrap;gap:0.375rem"></div>
+        </div>
+        <div style="margin-bottom:1.25rem">
+          <div style="font-size:0.75rem;font-weight:600;color:var(--red);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.625rem">Keywords Missing from Your CV</div>
+          <div id="ats-missing" style="display:flex;flex-wrap:wrap;gap:0.375rem"></div>
+        </div>
+        <div id="ats-warnings-section" style="display:none">
+          <div style="font-size:0.75rem;font-weight:600;color:var(--amber);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.625rem">ATS Formatting Warnings</div>
+          <ul id="ats-warnings" style="list-style:none;display:flex;flex-direction:column;gap:0.4rem"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ATS Optimised CV -->
+    <div class="result-card-full">
+      <div class="result-head">
+        <span class="result-head-title">ATS-Optimised CV</span>
+        <button class="copy-btn" onclick="copyText('ats-cv-content')">Copy</button>
+      </div>
+      <div class="result-body">
+        <p style="font-size:0.78rem;color:var(--slate);margin-bottom:1rem;background:var(--blue3);padding:0.625rem 0.875rem;border-radius:6px;border-left:3px solid var(--blue)">Use this version when applying through any online system or job board. It is formatted to pass ATS filters and includes all the missing keywords.</p>
+        <div class="cv-rewrite" id="ats-cv-content"></div>
+      </div>
+    </div>
+
+    <!-- Human CV Rewrite -->
     <div class="result-card-full">
       <div class="result-head">
         <span class="result-head-title">CV Rewritten for This Role</span>
         <button class="copy-btn" onclick="copyText('cv-rewrite-content')">Copy</button>
       </div>
       <div class="result-body">
+        <p style="font-size:0.78rem;color:var(--slate);margin-bottom:1rem;background:var(--glight);padding:0.625rem 0.875rem;border-radius:6px;border-left:3px solid var(--green)">Use this version for emailing directly to a hiring manager or bringing to interview. Written to impress the person, not the algorithm.</p>
         <div class="cv-rewrite" id="cv-rewrite-content"></div>
       </div>
     </div>
@@ -345,22 +380,24 @@ textarea::placeholder{color:var(--slate)}
       </div>
     </div>
 
-    <!-- Interview questions and salary -->
-    <div class="result-grid">
-      <div class="result-card">
-        <div class="result-head">
-          <span class="result-head-title">Likely Interview Questions</span>
-        </div>
-        <div class="result-body">
-          <ul class="interview-list" id="interview-list"></ul>
-        </div>
+    <!-- Screening Questions -->
+    <div class="result-card-full">
+      <div class="result-head">
+        <span class="result-head-title" style="color:var(--blue)">5 Screening Call Questions</span>
+        <span style="font-size:0.7rem;color:var(--slate);font-weight:400">Specific to this role and your CV</span>
       </div>
-      <div class="result-card">
-        <div class="result-head">
-          <span class="result-head-title">Salary Context</span>
-        </div>
-        <div class="result-body" id="salary-content"></div>
+      <div class="result-body">
+        <p style="font-size:0.78rem;color:var(--slate);margin-bottom:1.25rem">These are the questions a recruiter is most likely to ask you based on this specific job description and your CV gaps. Study the answer frameworks before your call.</p>
+        <div id="screening-list" style="display:flex;flex-direction:column;gap:1.25rem"></div>
       </div>
+    </div>
+
+    <!-- Salary -->
+    <div class="result-card-full">
+      <div class="result-head">
+        <span class="result-head-title">Salary Context</span>
+      </div>
+      <div class="result-body" id="salary-content"></div>
     </div>
 
     <button class="new-btn" onclick="resetAnalysis()">Run Another Analysis</button>
@@ -645,32 +682,22 @@ function displayResults(r) {
   const num = document.getElementById('score-num');
   num.textContent = score;
   if (score >= 65) {
-    ring.className = 'score-ring high';
-    num.className = 'score-num high';
+    ring.className = 'score-ring high'; num.className = 'score-num high';
   } else if (score >= 40) {
-    ring.className = 'score-ring mid';
-    num.className = 'score-num mid';
+    ring.className = 'score-ring mid'; num.className = 'score-num mid';
   } else {
-    ring.className = 'score-ring low';
-    num.className = 'score-num low';
+    ring.className = 'score-ring low'; num.className = 'score-num low';
   }
 
   // Verdict badge
   const badge = document.getElementById('verdict-badge');
-  const verdictMap = {
-    'Strong Candidate': 'recommend',
-    'Borderline': 'consider',
-    'Do Not Apply': 'pass'
-  };
+  const verdictMap = { 'Strong Candidate': 'recommend', 'Borderline': 'consider', 'Do Not Apply': 'pass' };
   badge.className = 'verdict-badge ' + (verdictMap[r.verdict] || 'consider');
   badge.textContent = r.verdict;
-
   document.getElementById('score-verdict').textContent = r.verdict === 'Do Not Apply'
     ? 'We recommend not applying for this role.'
-    : r.verdict === 'Strong Candidate'
-    ? 'You are a strong candidate for this role.'
+    : r.verdict === 'Strong Candidate' ? 'You are a strong candidate for this role.'
     : 'You are a borderline candidate. Consider carefully before applying.';
-
   document.getElementById('score-summary').textContent = r.summary;
 
   // Requirements met
@@ -679,7 +706,7 @@ function displayResults(r) {
   (r.requirements_met || []).forEach(req => {
     const li = document.createElement('li');
     li.className = 'req-item';
-    li.innerHTML = `<div class="req-icon met">✓</div><div><div class="req-text">${req.requirement}</div><div class="req-note">${req.evidence}</div></div>`;
+    li.innerHTML = `<div class="req-icon met">&#10003;</div><div><div class="req-text">${req.requirement}</div><div class="req-note">${req.evidence}</div></div>`;
     metList.appendChild(li);
   });
 
@@ -689,31 +716,80 @@ function displayResults(r) {
   (r.requirements_missing || []).forEach(req => {
     const li = document.createElement('li');
     li.className = 'req-item';
-    li.innerHTML = `<div class="req-icon miss">✗</div><div><div class="req-text">${req.requirement}</div><div class="req-note">${req.reason}</div></div>`;
+    li.innerHTML = `<div class="req-icon miss">&#10007;</div><div><div class="req-text">${req.requirement}</div><div class="req-note">${req.reason}</div></div>`;
     missList.appendChild(li);
   });
 
-  // CV rewrite
+  // ATS keywords present
+  const atsPresent = document.getElementById('ats-present');
+  atsPresent.innerHTML = '';
+  (r.ats_keywords_present || []).forEach(kw => {
+    const tag = document.createElement('span');
+    tag.style.cssText = 'background:#F0FDF4;color:#16A34A;border:1px solid #BBF7D0;padding:0.25rem 0.625rem;border-radius:4px;font-size:0.78rem;font-weight:500';
+    tag.textContent = kw;
+    atsPresent.appendChild(tag);
+  });
+
+  // ATS keywords missing
+  const atsMissing = document.getElementById('ats-missing');
+  atsMissing.innerHTML = '';
+  (r.ats_keywords_missing || []).forEach(kw => {
+    const tag = document.createElement('span');
+    tag.style.cssText = 'background:#FEF2F2;color:#DC2626;border:1px solid #FECACA;padding:0.25rem 0.625rem;border-radius:4px;font-size:0.78rem;font-weight:500';
+    tag.textContent = kw;
+    atsMissing.appendChild(tag);
+  });
+
+  // ATS warnings
+  const warnings = r.ats_warnings || [];
+  if (warnings.length > 0) {
+    document.getElementById('ats-warnings-section').style.display = 'block';
+    const warnList = document.getElementById('ats-warnings');
+    warnList.innerHTML = '';
+    warnings.forEach(w => {
+      const li = document.createElement('li');
+      li.style.cssText = 'font-size:0.82rem;color:#92400E;background:#FFFBEB;border:1px solid #FDE68A;padding:0.5rem 0.75rem;border-radius:5px';
+      li.textContent = w;
+      warnList.appendChild(li);
+    });
+  }
+
+  // ATS optimised CV
+  document.getElementById('ats-cv-content').textContent = r.ats_optimised_cv || r.cv_rewrite || '';
+
+  // Human CV rewrite
   document.getElementById('cv-rewrite-content').textContent = r.cv_rewrite || '';
 
   // Cover letter
   document.getElementById('cover-letter-content').textContent = r.cover_letter || '';
 
-  // Interview questions
-  const intList = document.getElementById('interview-list');
-  intList.innerHTML = '';
-  (r.interview_questions || []).forEach((q, i) => {
-    const li = document.createElement('li');
-    li.className = 'interview-item';
-    li.innerHTML = `<div class="interview-num">Question ${i + 1}</div>${q}`;
-    intList.appendChild(li);
+  // Screening questions
+  const screeningList = document.getElementById('screening-list');
+  screeningList.innerHTML = '';
+  (r.screening_questions || []).forEach((q, i) => {
+    const div = document.createElement('div');
+    div.style.cssText = 'background:var(--light);border:1px solid var(--border);border-radius:10px;padding:1.25rem;border-left:3px solid var(--blue)';
+    div.innerHTML = `
+      <div style="font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);margin-bottom:0.5rem">Question ${i + 1}</div>
+      <div style="font-size:0.95rem;font-weight:600;color:var(--ink);margin-bottom:0.625rem;line-height:1.4">${q.question}</div>
+      <div style="font-size:0.78rem;color:var(--slate);margin-bottom:0.75rem;font-style:italic">${q.why_asked}</div>
+      <div style="font-size:0.75rem;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem">How to Answer</div>
+      <div style="font-size:0.875rem;color:var(--ink3);line-height:1.7">${q.answer_framework}</div>
+    `;
+    screeningList.appendChild(div);
   });
 
   // Salary
   const salaryDiv = document.getElementById('salary-content');
   salaryDiv.innerHTML = `
-    <div class="salary-row"><span class="salary-label">Typical range</span><span class="salary-val">${r.salary_range_low || 'N/A'} to ${r.salary_range_high || 'N/A'}</span></div>
-    <div class="salary-row" style="border:none"><span class="salary-label">Context</span><span style="font-size:0.82rem;color:var(--slate);line-height:1.55">${r.salary_context || ''}</span></div>
+    <div style="display:flex;align-items:center;gap:1rem;padding:0.75rem 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:0.78rem;color:var(--slate);min-width:100px">Typical range</span>
+      <span style="font-size:0.95rem;font-weight:600;color:var(--ink)">${r.salary_range_low || 'N/A'} to ${r.salary_range_high || 'N/A'}</span>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:1rem;padding:0.75rem 0">
+      <span style="font-size:0.78rem;color:var(--slate);min-width:100px;margin-top:2px">Context</span>
+      <span style="font-size:0.875rem;color:var(--slate);line-height:1.6">${r.salary_context || ''}</span>
+    </div>
   `;
 
   document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
