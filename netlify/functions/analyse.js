@@ -11,7 +11,7 @@ exports.handler = async function(event, context) {
   }
 
   let body;
-  try { body = JSON.parse(event.body); } 
+  try { body = JSON.parse(event.body); }
   catch(e) { return { statusCode: 400, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'Invalid request body' }) }; }
 
   const { jobDesc, cvContent } = body;
@@ -19,14 +19,73 @@ exports.handler = async function(event, context) {
     return { statusCode: 400, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'Missing job description or CV' }) };
   }
 
-  const prompt = `You are HiredIQ, an honest CV assessment tool. Analyse this job application and respond ONLY with valid JSON. Use only standard ASCII characters - no smart quotes, no em dashes, no special characters.\n\n{"score": <0-100>, "verdict": "<Strong Candidate, Borderline, or Do Not Apply>", "summary": "<2-3 honest sentences>", "requirements_met": [{"requirement": "<text>", "evidence": "<from CV>"}], "requirements_missing": [{"requirement": "<text>", "reason": "<why it matters>"}], "cv_rewrite": "<full rewritten CV for this role>", "cover_letter": "<full cover letter>", "interview_questions": ["<q1>", "<q2>", "<q3>"], "salary_context": "<one sentence on typical pay>", "salary_range_low": "<figure>", "salary_range_high": "<figure>"}\n\nScore below 40 = Do Not Apply. 40-65 = Borderline. Above 65 = Strong Candidate.\n\nJOB DESCRIPTION:\n${jobDesc}\n\nCANDIDATE CV:\n${cvContent}\n\nJSON only. No markdown. No other text.`;
+  const prompt = `You are HiredIQ, an honest CV assessment tool built by a former MD with 30 years of hiring experience. Give candidates the complete honest truth about their application and prepare them for every stage of the process.
 
-  const requestBody = JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 4000, messages: [{ role: 'user', content: prompt }] });
+Analyse this job application and respond ONLY with valid JSON. Use only standard ASCII characters - no smart quotes, no em dashes, no special characters.
+
+{
+  "score": <number 0-100>,
+  "verdict": "<one of: Strong Candidate, Borderline, Do Not Apply>",
+  "summary": "<2-3 sentences of honest plain English assessment. Be direct and specific.>",
+  "requirements_met": [
+    {"requirement": "<requirement text>", "evidence": "<specific evidence from the CV>"}
+  ],
+  "requirements_missing": [
+    {"requirement": "<requirement text>", "reason": "<why this gap matters to this employer>"}
+  ],
+  "ats_keywords_present": [
+    "<exact keyword or phrase from job description that IS present in the CV>"
+  ],
+  "ats_keywords_missing": [
+    "<exact keyword or phrase from job description that is NOT in the CV but should be>"
+  ],
+  "ats_warnings": [
+    "<any formatting issue that could cause ATS rejection, e.g. tables, columns, graphics, unusual fonts>"
+  ],
+  "ats_optimised_cv": "<full plain text ATS-optimised version of the CV. Naturally incorporate all missing keywords. Use standard section headers only: Professional Summary, Work Experience, Education, Skills, Achievements. No tables, no columns, no bullet symbols that ATS cannot read. This is the version the candidate submits online.>",
+  "cv_rewrite": "<full polished human-readable version of the CV tailored for this specific role and company. Use the language and emphasis the hiring manager is looking for. This is the version the candidate brings to interview.>",
+  "cover_letter": "<full cover letter for this specific role and company. Professional, specific, not generic. Opens with a strong hook. Addresses the key requirements directly.>",
+  "screening_questions": [
+    {
+      "question": "<the specific question a recruiter would ask based on this role and CV>",
+      "why_asked": "<one sentence on why recruiters ask this for this type of role>",
+      "answer_framework": "<specific guidance on what to cover in the answer, what to emphasise and how to address any weakness this question might expose>"
+    }
+  ],
+  "salary_context": "<one sentence on what this role typically pays at this level in this location>",
+  "salary_range_low": "<lower salary figure with currency symbol>",
+  "salary_range_high": "<upper salary figure with currency symbol>"
+}
+
+Scoring guide: below 40 means Do Not Apply. 40-65 means Borderline. Above 65 means Strong Candidate.
+
+Generate exactly 5 screening questions. Make them specific to this actual job description and the candidate's specific CV gaps, not generic interview questions.
+
+JOB DESCRIPTION:
+${jobDesc}
+
+CANDIDATE CV:
+${cvContent}
+
+Respond with valid JSON only. No markdown, no code blocks, no other text before or after the JSON.`;
+
+  const requestBody = JSON.stringify({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 6000,
+    messages: [{ role: 'user', content: prompt }]
+  });
 
   return new Promise((resolve) => {
     const options = {
-      hostname: 'api.anthropic.com', path: '/v1/messages', method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': API_KEY, 'anthropic-version': '2023-06-01', 'Content-Length': Buffer.byteLength(requestBody) }
+      hostname: 'api.anthropic.com',
+      path: '/v1/messages',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': API_KEY,
+        'anthropic-version': '2023-06-01',
+        'Content-Length': Buffer.byteLength(requestBody)
+      }
     };
 
     const req = https.request(options, (res) => {
@@ -35,7 +94,7 @@ exports.handler = async function(event, context) {
       res.on('end', () => {
         try {
           if (res.statusCode !== 200) {
-            resolve({ statusCode: res.statusCode, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'API error ' + res.statusCode }) });
+            resolve({ statusCode: res.statusCode, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'API error ' + res.statusCode + ': ' + data.substring(0, 300) }) });
             return;
           }
           const parsed = JSON.parse(data);
