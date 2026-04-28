@@ -70,7 +70,7 @@ ${cvContent}
 Respond with valid JSON only. No markdown, no code blocks, no other text before or after the JSON.`;
 
   const requestBody = JSON.stringify({
-    model: 'claude-sonnet-4-5-20250929',
+    model: 'claude-sonnet-4-5',
     max_tokens: 8000,
     messages: [{ role: 'user', content: prompt }]
   });
