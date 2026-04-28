@@ -218,6 +218,22 @@ textarea::placeholder{color:var(--slate)}
 
   <div class="error-box" id="error-box"></div>
 
+  <!-- PAYWALL -->
+  <div id="paywall" style="display:none;background:var(--ink);border-radius:12px;padding:2.5rem;text-align:center;margin-bottom:2rem">
+    <div style="font-size:2rem;margin-bottom:0.75rem">🎯</div>
+    <h2 style="font-family:'Instrument Serif',serif;font-size:1.6rem;color:white;letter-spacing:-0.02em;margin-bottom:0.75rem">You have used your 3 free analyses</h2>
+    <p style="font-size:0.9rem;color:#94A3B8;max-width:420px;margin:0 auto 2rem;line-height:1.65">Upgrade to Pro for 30 analyses per month, full CV rewrites, cover letters, interview questions and your complete application tracker.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem">
+      <a href="https://buy.stripe.com/test_6oU00j3QUf4R8SD61V14400" target="_blank" style="background:#2563EB;color:white;padding:0.875rem 2rem;border-radius:8px;font-size:0.95rem;font-weight:700;text-decoration:none">Get Pro: £9.99/month</a>
+      <a href="https://buy.stripe.com/test_3cI14n2MQaOB4CngGz14402" target="_blank" style="background:transparent;color:white;padding:0.875rem 2rem;border-radius:8px;font-size:0.95rem;font-weight:600;text-decoration:none;border:2px solid rgba(255,255,255,0.3)">Get Power: £19.99/month</a>
+    </div>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem">
+      <a href="https://buy.stripe.com/test_14A4gz3QUcWJ8SDfCv14401" target="_blank" style="font-size:0.8rem;color:#93C5FD;text-decoration:none">Pro Annual: £99/year (2 months free)</a>
+      <a href="https://buy.stripe.com/test_eVq3cvcnqe0N2ufeyr14403" target="_blank" style="font-size:0.8rem;color:#93C5FD;text-decoration:none">Power Annual: £199/year (2 months free)</a>
+    </div>
+    <a href="/" style="font-size:0.78rem;color:#64748B;text-decoration:none">Back to HiredIQ</a>
+  </div>
+
   <!-- Input -->
   <div id="input-section">
     <div class="input-grid">
@@ -521,8 +537,8 @@ async function runAnalysis() {
   }
 
   if (analysesLeft <= 0) {
-    errorBox.textContent = 'You have used all your free analyses this month. Upgrade to Pro for 30 analyses per month.';
-    errorBox.style.display = 'block';
+    document.getElementById('input-section').style.display = 'none';
+    document.getElementById('paywall').style.display = 'block';
     return;
   }
 
