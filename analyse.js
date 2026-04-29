@@ -172,7 +172,7 @@ ${cvContent}
 
 Respond with valid JSON only. No markdown, no code blocks, no other text.`;
 
-  const result = await callClaude(API_KEY, prompt, 2000);
+  const result = await callClaude(API_KEY, prompt, 3500);
   if (!result.ok) {
     return { statusCode: 500, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: result.error }) };
   }
