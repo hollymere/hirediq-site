@@ -2,7 +2,7 @@ const https = require('https');
 
 function callClaude(API_KEY, prompt, maxTokens) {
   const requestBody = JSON.stringify({
-    model: 'claude-haiku-4-5-20251001',
+    model: 'claude-sonnet-4-5',
     max_tokens: maxTokens,
     messages: [{ role: 'user', content: prompt }]
   });
@@ -34,7 +34,7 @@ function callClaude(API_KEY, prompt, maxTokens) {
           raw = raw.replace(/^```json\n?/, '').replace(/^```\n?/, '').replace(/\n?```$/, '').trim();
           raw = raw.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
           raw = raw.replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, '-');
-          JSON.parse(raw); // validate
+          JSON.parse(raw);
           resolve({ ok: true, body: raw });
         } catch(err) {
           resolve({ ok: false, error: 'Parse error: ' + err.message });
@@ -70,111 +70,78 @@ exports.handler = async function(event, context) {
     return { statusCode: 400, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'Missing job description or CV' }) };
   }
 
-  // ── MODE: cover_letter ──────────────────────────────────────────────────
+  // Trim inputs to prevent oversized requests
+  const jd = jobDesc.substring(0, 3000);
+  const cv = cvContent.substring(0, 3000);
+
+  // COVER LETTER
   if (mode === 'cover_letter') {
-    const prompt = `You are HiredIQ. Write a tailored cover letter for this candidate applying for this specific role.
+    const prompt = `Write a tailored cover letter for this candidate for this role. ASCII characters only, no smart quotes or em dashes.
 
-Use only standard ASCII characters - no smart quotes, no em dashes, no special characters.
+Respond ONLY with this JSON:
+{"cover_letter": "<3-4 paragraph professional cover letter specific to this role>"}
 
-Respond ONLY with valid JSON in exactly this structure:
-{
-  "cover_letter": "<full professional cover letter, specific to this role and company, 3-4 paragraphs, not generic>"
-}
+JOB: ${jd}
+CV: ${cv}
 
-JOB DESCRIPTION:
-${jobDesc}
+JSON only, no other text.`;
 
-CANDIDATE CV:
-${cvContent}
-
-Respond with valid JSON only. No markdown, no code blocks, no other text.`;
-
-    const result = await callClaude(API_KEY, prompt, 1500);
-    if (!result.ok) {
-      return { statusCode: 500, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: result.error }) };
-    }
+    const result = await callClaude(API_KEY, prompt, 1200);
+    if (!result.ok) return { statusCode: 500, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: result.error }) };
     return { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, body: result.body };
   }
 
-  // ── MODE: rewrite ───────────────────────────────────────────────────────
+  // CV REWRITE
   if (mode === 'rewrite') {
-    const prompt = `You are HiredIQ. Rewrite this candidate's CV for this specific role and generate screening questions.
+    const prompt = `Rewrite this CV for this specific role and provide 5 screening questions. ASCII characters only, no smart quotes or em dashes.
 
-Use only standard ASCII characters - no smart quotes, no em dashes, no special characters.
-
-Respond ONLY with valid JSON in exactly this structure:
+Respond ONLY with this JSON:
 {
-  "ats_optimised_cv": "<full plain text ATS-optimised CV. Incorporate missing keywords naturally. Use only these section headers: Professional Summary, Work Experience, Education, Skills, Achievements. No tables, no columns, no special bullet symbols.>",
-  "cv_rewrite": "<full polished human-readable CV tailored for this specific role. Same content as ATS version but written to impress a human hiring manager.>",
+  "ats_optimised_cv": "<full ATS-optimised CV with missing keywords added naturally. Headers: Professional Summary, Work Experience, Education, Skills, Achievements only>",
+  "cv_rewrite": "<full human-readable CV tailored for this role>",
   "screening_questions": [
-    {
-      "question": "<specific question a recruiter would ask based on this role and CV>",
-      "why_asked": "<one sentence on why recruiters ask this>",
-      "answer_framework": "<specific guidance on what to cover, what to emphasise, how to address any weakness>"
-    }
+    {"question": "<question>", "why_asked": "<one sentence>", "answer_framework": "<guidance>"}
   ]
 }
 
-Generate exactly 5 screening questions specific to this role and CV gaps. Not generic interview questions.
+Exactly 5 screening questions specific to this role and CV gaps.
 
-JOB DESCRIPTION:
-${jobDesc}
+JOB: ${jd}
+CV: ${cv}
 
-CANDIDATE CV:
-${cvContent}
+JSON only, no other text.`;
 
-Respond with valid JSON only. No markdown, no code blocks, no other text.`;
-
-    const result = await callClaude(API_KEY, prompt, 3000);
-    if (!result.ok) {
-      return { statusCode: 500, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: result.error }) };
-    }
+    const result = await callClaude(API_KEY, prompt, 2500);
+    if (!result.ok) return { statusCode: 500, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: result.error }) };
     return { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, body: result.body };
   }
 
-  // ── MODE: analyse (default) ─────────────────────────────────────────────
-  const prompt = `You are HiredIQ, an honest CV assessment tool built by a former MD with 30 years of hiring experience. Give candidates the complete honest truth. Do not flatter or inflate scores.
+  // ANALYSE (default)
+  const prompt = `You are HiredIQ, built by a former MD with 30 years hiring experience. Be brutally honest. Do not inflate scores.
 
-Use only standard ASCII characters - no smart quotes, no em dashes, no special characters.
-
-Respond ONLY with valid JSON in exactly this structure:
+Respond ONLY with this JSON. ASCII characters only, no smart quotes or em dashes:
 {
-  "score": <number 0-100>,
-  "verdict": "<one of: Strong Candidate, Borderline, Do Not Apply>",
-  "summary": "<2-3 sentences of honest plain English assessment. Be direct and specific.>",
-  "requirements_met": [
-    {"requirement": "<requirement text>", "evidence": "<specific evidence from the CV>"}
-  ],
-  "requirements_missing": [
-    {"requirement": "<requirement text>", "reason": "<why this gap matters to this employer>"}
-  ],
-  "ats_keywords_present": [
-    "<exact keyword or phrase from job description that IS present in the CV>"
-  ],
-  "ats_keywords_missing": [
-    "<exact keyword or phrase from job description that is NOT in the CV but should be>"
-  ],
-  "ats_warnings": [
-    "<any formatting issue that could cause ATS rejection>"
-  ],
-  "salary_context": "<one sentence on what this role typically pays at this level in this location>",
-  "salary_range_low": "<lower salary figure with currency symbol>",
-  "salary_range_high": "<upper salary figure with currency symbol>"
+  "score": <0-100>,
+  "verdict": "<Strong Candidate|Borderline|Do Not Apply>",
+  "summary": "<2-3 sentences, direct and honest>",
+  "requirements_met": [{"requirement": "<text>", "evidence": "<from CV>"}],
+  "requirements_missing": [{"requirement": "<text>", "reason": "<why it matters>"}],
+  "ats_keywords_present": ["<keyword from JD present in CV>"],
+  "ats_keywords_missing": ["<keyword from JD missing from CV>"],
+  "ats_warnings": ["<formatting issue that could cause ATS rejection>"],
+  "salary_context": "<one sentence on typical pay for this role and location>",
+  "salary_range_low": "<figure with currency>",
+  "salary_range_high": "<figure with currency>"
 }
 
-Scoring guide: below 40 = Do Not Apply. 40-65 = Borderline. Above 65 = Strong Candidate.
+Score: under 40 = Do Not Apply, 40-65 = Borderline, over 65 = Strong Candidate.
 
-JOB DESCRIPTION:
-${jobDesc}
+JOB: ${jd}
+CV: ${cv}
 
-CANDIDATE CV:
-${cvContent}
+JSON only, no other text.`;
 
-Respond with valid JSON only. No markdown, no code blocks, no other text.`;
-
-  const result = await callClaude(API_KEY, prompt, 3500);
-  if (!result.ok) {
-    return { statusCode: 500, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: result.error }) };
-  }
+  const result = await callClaude(API_KEY, prompt, 2000);
+  if (!result.ok) return { statusCode: 500, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: result.error }) };
   return { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, body: result.body };
 };
