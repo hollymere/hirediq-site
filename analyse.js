@@ -84,12 +84,15 @@ JSON only.`;
     return makeRequest(prompt, 1000);
   }
 
-  // CV REWRITE
+  // CV REWRITE - includes ATS keywords
   if (mode === 'rewrite') {
-    const prompt = `Rewrite this CV for this role and give 5 screening questions. ASCII only, no smart quotes or em dashes.
+    const prompt = `Rewrite this CV for this role, identify ATS keywords, and give 5 screening questions. ASCII only, no smart quotes or em dashes.
 Respond ONLY with this JSON:
 {
-  "ats_optimised_cv": "<full ATS CV with missing keywords. Headers: Professional Summary, Work Experience, Education, Skills, Achievements>",
+  "ats_keywords_present": ["<keyword from JD present in CV>"],
+  "ats_keywords_missing": ["<keyword from JD missing from CV>"],
+  "ats_warnings": ["<ATS formatting issue>"],
+  "ats_optimised_cv": "<full ATS CV with missing keywords added. Headers: Professional Summary, Work Experience, Education, Skills, Achievements>",
   "cv_rewrite": "<full human-readable CV tailored for this role>",
   "screening_questions": [{"question": "<q>", "why_asked": "<one sentence>", "answer_framework": "<guidance>"}]
 }
@@ -100,7 +103,7 @@ JSON only.`;
     return makeRequest(prompt, 4000);
   }
 
-  // ANALYSE
+  // ANALYSE - score, verdict, requirements, salary only. Fast.
   const prompt = `You are HiredIQ, built by a former MD with 30 years hiring experience. Be honest, do not inflate scores. ASCII only, no smart quotes or em dashes.
 Respond ONLY with this JSON:
 {
@@ -109,9 +112,6 @@ Respond ONLY with this JSON:
   "summary": "<2-3 honest sentences>",
   "requirements_met": [{"requirement": "<text>", "evidence": "<from CV>"}],
   "requirements_missing": [{"requirement": "<text>", "reason": "<why it matters>"}],
-  "ats_keywords_present": ["<keyword from JD in CV>"],
-  "ats_keywords_missing": ["<keyword from JD not in CV>"],
-  "ats_warnings": ["<ATS formatting issue>"],
   "salary_context": "<one sentence on typical pay>",
   "salary_range_low": "<figure with currency>",
   "salary_range_high": "<figure with currency>"
@@ -121,5 +121,5 @@ JOB: ${jd}
 CV: ${cv}
 JSON only.`;
 
-  return makeRequest(prompt, 4000);
+  return makeRequest(prompt, 1500);
 };
