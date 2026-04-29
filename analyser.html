@@ -20,7 +20,6 @@
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--light);color:var(--ink);line-height:1.6;min-height:100vh}
-
 nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;z-index:100}
 .nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
 .logo{display:flex;align-items:center;gap:8px;text-decoration:none}
@@ -28,23 +27,15 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 2rem
 .logo-mark svg{width:14px;height:14px;stroke:white;fill:none;stroke-width:2.5}
 .logo-text{font-size:1rem;font-weight:600;color:var(--ink);letter-spacing:-0.02em}
 .logo-text span{color:var(--blue)}
-.nav-tag{font-size:0.72rem;font-weight:600;background:var(--blue3);color:var(--blue2);padding:0.25rem 0.6rem;border-radius:20px;letter-spacing:0.05em}
-
 .main{max-width:960px;margin:0 auto;padding:2.5rem 2rem}
-
-/* Hero */
 .page-title{font-family:'Instrument Serif',serif;font-size:clamp(1.8rem,3.5vw,2.4rem);letter-spacing:-0.02em;margin-bottom:0.5rem}
 .page-sub{font-size:0.9rem;color:var(--slate);margin-bottom:2rem;max-width:520px;line-height:1.7}
-
-/* Usage counter */
 .usage-bar{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:0.875rem 1.25rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:0.5rem}
 .usage-label{font-size:0.8rem;color:var(--slate)}
 .usage-count{font-family:'DM Mono',monospace;font-size:0.85rem;font-weight:500;color:var(--ink)}
 .usage-count span{color:var(--blue)}
 .upgrade-link{font-size:0.78rem;color:var(--blue);text-decoration:none;font-weight:600}
 .upgrade-link:hover{color:var(--blue2)}
-
-/* Input panel */
 .input-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
 .input-card{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .input-card-head{padding:0.875rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.5rem}
@@ -54,9 +45,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 2rem
 textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:0.875rem;font-family:'DM Sans',sans-serif;font-size:0.85rem;color:var(--ink);resize:vertical;min-height:200px;outline:none;transition:border-color 0.2s;line-height:1.6}
 textarea:focus{border-color:var(--blue)}
 textarea::placeholder{color:var(--slate)}
-
-/* CV Upload */
-.upload-area{border:2px dashed var(--border);border-radius:8px;padding:2rem;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem}
+.upload-area{border:2px dashed var(--border);border-radius:8px;padding:2rem;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem}
 .upload-area:hover{border-color:var(--blue);background:var(--blue3)}
 .upload-area.dragover{border-color:var(--blue);background:var(--blue3)}
 .upload-area.has-file{border-color:var(--green);background:var(--glight)}
@@ -68,20 +57,14 @@ textarea::placeholder{color:var(--slate)}
 .upload-sub{font-size:0.75rem;color:var(--slate)}
 .upload-input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
 .file-name{font-size:0.78rem;color:var(--green);font-weight:600;word-break:break-all;padding:0 1rem}
-
-/* Paste CV option */
 .or-divider{text-align:center;font-size:0.75rem;color:var(--slate);margin:0.75rem 0;position:relative}
 .or-divider::before{content:'';position:absolute;left:0;top:50%;width:calc(50% - 20px);height:1px;background:var(--border)}
 .or-divider::after{content:'';position:absolute;right:0;top:50%;width:calc(50% - 20px);height:1px;background:var(--border)}
-
-/* Analyse button */
 .analyse-btn{width:100%;background:var(--blue);color:white;border:none;padding:1rem 2rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.75rem;margin-bottom:0.75rem}
 .analyse-btn:hover{background:var(--blue2);transform:translateY(-1px)}
 .analyse-btn:disabled{background:var(--slate);cursor:not-allowed;transform:none}
 .analyse-btn svg{width:18px;height:18px;stroke:white;fill:none;stroke-width:2.5}
 .analyse-note{text-align:center;font-size:0.75rem;color:var(--slate)}
-
-/* Loading */
 .loading{display:none;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:3rem 2rem;text-align:center;margin-bottom:2rem}
 .loading-spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -91,14 +74,10 @@ textarea::placeholder{color:var(--slate)}
 .loading-steps li{font-size:0.78rem;color:var(--slate);display:flex;align-items:center;gap:0.5rem;opacity:0.4;transition:opacity 0.4s}
 .loading-steps li.active{opacity:1;color:var(--blue);font-weight:500}
 .loading-steps li.done{opacity:0.7;color:var(--green)}
-.loading-steps li::before{content:'○';font-size:0.6rem}
-.loading-steps li.active::before{content:'●'}
-.loading-steps li.done::before{content:'✓';color:var(--green)}
-
-/* Results */
+.loading-steps li::before{content:'o';font-size:0.6rem}
+.loading-steps li.active::before{content:'*'}
+.loading-steps li.done::before{content:'v';color:var(--green)}
 .results{display:none;margin-bottom:2rem}
-
-/* Score header */
 .score-header{background:var(--ink);border-radius:12px;padding:2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
 .score-ring{width:100px;height:100px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:4px solid;flex-shrink:0}
 .score-ring.high{border-color:#4ADE80;background:rgba(74,222,128,0.1)}
@@ -116,16 +95,12 @@ textarea::placeholder{color:var(--slate)}
 .verdict-badge.recommend{background:rgba(74,222,128,0.15);color:#4ADE80;border:1px solid rgba(74,222,128,0.3)}
 .verdict-badge.consider{background:rgba(252,211,77,0.15);color:#FCD34D;border:1px solid rgba(252,211,77,0.3)}
 .verdict-badge.pass{background:rgba(252,165,165,0.15);color:#FCA5A5;border:1px solid rgba(252,165,165,0.3)}
-
-/* Result sections */
 .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
 .result-card{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .result-card-full{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.25rem}
 .result-head{padding:0.875rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .result-head-title{font-size:0.78rem;font-weight:600;color:var(--ink);text-transform:uppercase;letter-spacing:0.05em}
 .result-body{padding:1.25rem}
-
-/* Requirements list */
 .req-list{list-style:none;display:flex;flex-direction:column;gap:0.625rem}
 .req-item{display:flex;align-items:flex-start;gap:0.625rem;font-size:0.83rem;line-height:1.5}
 .req-icon{flex-shrink:0;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;margin-top:1px}
@@ -133,42 +108,33 @@ textarea::placeholder{color:var(--slate)}
 .req-icon.miss{background:var(--rlight);color:var(--red)}
 .req-text{color:var(--ink3)}
 .req-note{font-size:0.75rem;color:var(--slate);margin-top:2px}
-
-/* CV Rewrite */
 .cv-rewrite{font-size:0.83rem;color:var(--ink3);line-height:1.75;white-space:pre-wrap;max-height:400px;overflow-y:auto;padding-right:0.5rem}
 .cv-rewrite::-webkit-scrollbar{width:4px}
 .cv-rewrite::-webkit-scrollbar-track{background:var(--light)}
 .cv-rewrite::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-
-/* Cover letter */
-.cover-letter{font-size:0.83rem;color:var(--ink3);line-height:1.75;white-space:pre-wrap;max-height:320px;overflow-y:auto;padding-right:0.5rem}
-
-/* Interview questions */
-.interview-list{list-style:none;display:flex;flex-direction:column;gap:0.875rem}
-.interview-item{background:var(--light);border-radius:8px;padding:0.875rem 1rem;font-size:0.83rem;color:var(--ink3);line-height:1.55}
-.interview-num{font-family:'DM Mono',monospace;font-size:0.65rem;font-weight:500;color:var(--blue);margin-bottom:0.25rem;letter-spacing:0.08em;text-transform:uppercase}
-
-/* Salary */
-.salary-row{display:flex;align-items:center;gap:1rem;padding:0.75rem 0;border-bottom:1px solid var(--border)}
-.salary-row:last-child{border-bottom:none}
-.salary-label{font-size:0.78rem;color:var(--slate);min-width:100px}
-.salary-val{font-family:'DM Mono',monospace;font-size:0.9rem;font-weight:500;color:var(--ink)}
-
-/* Copy button */
 .copy-btn{font-size:0.72rem;color:var(--blue);background:none;border:1px solid var(--blue3);border-radius:4px;padding:0.2rem 0.5rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .copy-btn:hover{background:var(--blue3)}
-
-/* New analysis button */
 .new-btn{background:transparent;color:var(--blue);border:1.5px solid var(--blue);padding:0.75rem 1.5rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:600;cursor:pointer;transition:all 0.2s;display:block;margin:0 auto}
 .new-btn:hover{background:var(--blue3)}
-
-/* Error */
 .error-box{display:none;background:var(--rlight);border:1px solid #FECACA;border-radius:10px;padding:1.25rem;margin-bottom:1.5rem;font-size:0.85rem;color:var(--red)}
-
+/* Action buttons for CV rewrite / cover letter */
+.action-bar{background:var(--ink);border-radius:12px;padding:1.5rem 2rem;margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.action-bar-text{color:#94A3B8;font-size:0.875rem;line-height:1.5}
+.action-bar-text strong{color:white;display:block;font-size:1rem;margin-bottom:0.25rem}
+.action-buttons{display:flex;gap:0.75rem;flex-wrap:wrap}
+.action-btn{background:var(--blue);color:white;border:none;padding:0.75rem 1.25rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:600;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:0.5rem}
+.action-btn:hover{background:var(--blue2)}
+.action-btn:disabled{background:#334155;cursor:not-allowed;color:#64748B}
+.action-btn.secondary{background:transparent;border:1.5px solid rgba(255,255,255,0.2);color:white}
+.action-btn.secondary:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.4)}
+.action-btn.secondary:disabled{background:transparent;border-color:#334155;color:#334155;cursor:not-allowed}
+.inline-loading{display:none;padding:2rem;text-align:center;color:var(--slate);font-size:0.875rem}
+.inline-spinner{width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 0.75rem}
 @media(max-width:700px){
   .input-grid{grid-template-columns:1fr}
   .result-grid{grid-template-columns:1fr}
   .score-header{flex-direction:column;text-align:center}
+  .action-bar{flex-direction:column}
 }
 </style>
 </head>
@@ -202,17 +168,17 @@ textarea::placeholder{color:var(--slate)}
     <p style="font-size:0.75rem;color:var(--slate);margin-top:1rem;text-align:center">Your CV is never stored. Analysed and deleted instantly.</p>
   </div>
 
-  <!-- MAIN ANALYSER (hidden until email confirmed) -->
+  <!-- MAIN ANALYSER -->
   <div id="analyser-content" style="display:none">
 
   <h1 class="page-title">The Honest CV Analyser</h1>
-  <p class="page-sub">Paste a job description. Upload or paste your CV. Get an honest match score, a rewritten CV, a cover letter and the interview questions you need to prepare for.</p>
+  <p class="page-sub">Paste a job description. Upload or paste your CV. Get your honest match score, ATS keyword analysis, and everything you need to land the interview.</p>
 
   <div class="usage-bar">
     <span class="usage-label">Free analyses remaining this month</span>
     <div style="display:flex;align-items:center;gap:1rem">
       <span class="usage-count"><span id="analyses-left">3</span> of 3</span>
-      <a href="/" class="upgrade-link">Upgrade to Pro for 30/month</a>
+      <a href="/" class="upgrade-link">Upgrade to Pro for £9.99/month</a>
     </div>
   </div>
 
@@ -269,7 +235,7 @@ textarea::placeholder{color:var(--slate)}
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       Analyse My Application
     </button>
-    <p class="analyse-note">Analysis takes 20 to 30 seconds. Your CV data is never stored or shared.</p>
+    <p class="analyse-note">Your score appears in seconds. Your CV data is never stored or shared.</p>
   </div>
 
   <!-- Loading -->
@@ -281,9 +247,7 @@ textarea::placeholder{color:var(--slate)}
       <li id="step1">Reading job requirements</li>
       <li id="step2">Assessing your CV against each requirement</li>
       <li id="step3">Calculating your honest match score</li>
-      <li id="step4">Rewriting your CV for this role</li>
-      <li id="step5">Writing your cover letter</li>
-      <li id="step6">Preparing interview questions</li>
+      <li id="step4">Checking ATS keyword coverage</li>
     </ul>
   </div>
 
@@ -345,53 +309,6 @@ textarea::placeholder{color:var(--slate)}
       </div>
     </div>
 
-    <!-- ATS Optimised CV -->
-    <div class="result-card-full">
-      <div class="result-head">
-        <span class="result-head-title">ATS-Optimised CV</span>
-        <button class="copy-btn" onclick="copyText('ats-cv-content')">Copy</button>
-      </div>
-      <div class="result-body">
-        <p style="font-size:0.78rem;color:var(--slate);margin-bottom:1rem;background:var(--blue3);padding:0.625rem 0.875rem;border-radius:6px;border-left:3px solid var(--blue)">Use this version when applying through any online system or job board. It is formatted to pass ATS filters and includes all the missing keywords.</p>
-        <div class="cv-rewrite" id="ats-cv-content"></div>
-      </div>
-    </div>
-
-    <!-- Human CV Rewrite -->
-    <div class="result-card-full">
-      <div class="result-head">
-        <span class="result-head-title">CV Rewritten for This Role</span>
-        <button class="copy-btn" onclick="copyText('cv-rewrite-content')">Copy</button>
-      </div>
-      <div class="result-body">
-        <p style="font-size:0.78rem;color:var(--slate);margin-bottom:1rem;background:var(--glight);padding:0.625rem 0.875rem;border-radius:6px;border-left:3px solid var(--green)">Use this version for emailing directly to a hiring manager or bringing to interview. Written to impress the person, not the algorithm.</p>
-        <div class="cv-rewrite" id="cv-rewrite-content"></div>
-      </div>
-    </div>
-
-    <!-- Cover Letter -->
-    <div class="result-card-full">
-      <div class="result-head">
-        <span class="result-head-title">Cover Letter</span>
-        <button class="copy-btn" onclick="copyText('cover-letter-content')">Copy</button>
-      </div>
-      <div class="result-body">
-        <div class="cover-letter" id="cover-letter-content"></div>
-      </div>
-    </div>
-
-    <!-- Screening Questions -->
-    <div class="result-card-full">
-      <div class="result-head">
-        <span class="result-head-title" style="color:var(--blue)">5 Screening Call Questions</span>
-        <span style="font-size:0.7rem;color:var(--slate);font-weight:400">Specific to this role and your CV</span>
-      </div>
-      <div class="result-body">
-        <p style="font-size:0.78rem;color:var(--slate);margin-bottom:1.25rem">These are the questions a recruiter is most likely to ask you based on this specific job description and your CV gaps. Study the answer frameworks before your call.</p>
-        <div id="screening-list" style="display:flex;flex-direction:column;gap:1.25rem"></div>
-      </div>
-    </div>
-
     <!-- Salary -->
     <div class="result-card-full">
       <div class="result-head">
@@ -400,23 +317,103 @@ textarea::placeholder{color:var(--slate)}
       <div class="result-body" id="salary-content"></div>
     </div>
 
-    <button class="new-btn" onclick="resetAnalysis()">Run Another Analysis</button>
+    <!-- ACTION BAR - CV Rewrite + Cover Letter -->
+    <div class="action-bar" id="action-bar">
+      <div class="action-bar-text">
+        <strong>Want to maximise your chances?</strong>
+        Get your CV rewritten for this role with all missing keywords added, plus 5 screening questions tailored to your gaps.
+      </div>
+      <div class="action-buttons">
+        <button class="action-btn" id="rewrite-btn" onclick="runRewrite()">
+          Rewrite My CV + Questions
+        </button>
+        <button class="action-btn secondary" id="cover-btn" onclick="runCoverLetter()">
+          Generate Cover Letter
+        </button>
+      </div>
+    </div>
+
+    <!-- CV Rewrite section (hidden until requested) -->
+    <div id="rewrite-section" style="display:none">
+      <div class="inline-loading" id="rewrite-loading">
+        <div class="inline-spinner"></div>
+        Rewriting your CV for this role...
+      </div>
+
+      <div id="rewrite-results" style="display:none">
+        <!-- ATS CV -->
+        <div class="result-card-full">
+          <div class="result-head">
+            <span class="result-head-title">ATS-Optimised CV</span>
+            <button class="copy-btn" onclick="copyText('ats-cv-content')">Copy</button>
+          </div>
+          <div class="result-body">
+            <p style="font-size:0.78rem;color:var(--slate);margin-bottom:1rem;background:var(--blue3);padding:0.625rem 0.875rem;border-radius:6px;border-left:3px solid var(--blue)">Use this version when applying through any online system or job board. Formatted to pass ATS filters with all missing keywords included.</p>
+            <div class="cv-rewrite" id="ats-cv-content"></div>
+          </div>
+        </div>
+
+        <!-- Human CV -->
+        <div class="result-card-full">
+          <div class="result-head">
+            <span class="result-head-title">CV Rewritten for This Role</span>
+            <button class="copy-btn" onclick="copyText('cv-rewrite-content')">Copy</button>
+          </div>
+          <div class="result-body">
+            <p style="font-size:0.78rem;color:var(--slate);margin-bottom:1rem;background:var(--glight);padding:0.625rem 0.875rem;border-radius:6px;border-left:3px solid var(--green)">Use this version for emailing directly to a hiring manager or bringing to interview. Written to impress the person, not the algorithm.</p>
+            <div class="cv-rewrite" id="cv-rewrite-content"></div>
+          </div>
+        </div>
+
+        <!-- Screening Questions -->
+        <div class="result-card-full">
+          <div class="result-head">
+            <span class="result-head-title" style="color:var(--blue)">5 Screening Call Questions</span>
+            <span style="font-size:0.7rem;color:var(--slate);font-weight:400">Specific to this role and your CV</span>
+          </div>
+          <div class="result-body">
+            <p style="font-size:0.78rem;color:var(--slate);margin-bottom:1.25rem">These are the questions a recruiter is most likely to ask based on this specific job description and your CV gaps.</p>
+            <div id="screening-list" style="display:flex;flex-direction:column;gap:1.25rem"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cover Letter section (hidden until requested) -->
+    <div id="cover-section" style="display:none">
+      <div class="inline-loading" id="cover-loading">
+        <div class="inline-spinner"></div>
+        Writing your cover letter...
+      </div>
+      <div id="cover-results" style="display:none">
+        <div class="result-card-full">
+          <div class="result-head">
+            <span class="result-head-title">Cover Letter</span>
+            <button class="copy-btn" onclick="copyText('cover-letter-content')">Copy</button>
+          </div>
+          <div class="result-body">
+            <p style="font-size:0.78rem;color:var(--slate);margin-bottom:1rem;background:var(--alight);padding:0.625rem 0.875rem;border-radius:6px;border-left:3px solid var(--amber)">Written specifically for this role. Personalise the opening line and any company-specific references before sending.</p>
+            <div class="cv-rewrite" id="cover-letter-content"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="new-btn" onclick="resetAnalysis()" style="margin-top:1rem">Run Another Analysis</button>
 
   </div>
 
 </div>
-  </div><!-- end analyser-content -->
-</div><!-- end main -->
+  </div>
+</div>
 
 <script>
 // EMAIL GATE
 function checkEmailGate() {
   const email = localStorage.getItem('hirediq_user_email');
   if (email) {
-    const gate = document.getElementById('email-gate');
-    const analyser = document.getElementById('analyser-content');
-    if (gate) gate.style.display = 'none';
-    if (analyser) analyser.style.display = 'block';
+    document.getElementById('email-gate').style.display = 'none';
+    document.getElementById('analyser-content').style.display = 'block';
   }
 }
 
@@ -453,15 +450,16 @@ async function submitEmailGate() {
 
 window.addEventListener('load', checkEmailGate);
 
-// API handled securely by Netlify function
 let analysesLeft = parseInt(localStorage.getItem('hirediq_analyses_left') ?? '3');
+let currentJobDesc = '';
+let currentCvContent = '';
 
 function updateCounter() {
   document.getElementById('analyses-left').textContent = analysesLeft;
 }
 updateCounter();
 
-// File upload handling
+// File upload
 const uploadArea = document.getElementById('upload-area');
 const cvFile = document.getElementById('cv-file');
 
@@ -511,8 +509,7 @@ async function extractPDFText(file) {
         for (let i = 1; i <= pdf.numPages; i++) {
           const page = await pdf.getPage(i);
           const textContent = await page.getTextContent();
-          const pageText = textContent.items.map(item => item.str).join(' ');
-          fullText += pageText + '\n';
+          fullText += textContent.items.map(item => item.str).join(' ') + '\n';
         }
         if (!fullText.trim()) {
           reject(new Error('Could not extract text from PDF. Please paste your CV as text instead.'));
@@ -528,14 +525,12 @@ async function extractPDFText(file) {
   });
 }
 
-// Loading steps animation
+// Loading steps
 let stepInterval;
 function animateSteps() {
-  const steps = ['step1','step2','step3','step4','step5','step6'];
+  const steps = ['step1','step2','step3','step4'];
   let current = 0;
-  steps.forEach(s => {
-    document.getElementById(s).className = '';
-  });
+  steps.forEach(s => document.getElementById(s).className = '');
   document.getElementById(steps[0]).className = 'active';
   stepInterval = setInterval(() => {
     if (current < steps.length - 1) {
@@ -543,16 +538,17 @@ function animateSteps() {
       current++;
       document.getElementById(steps[current]).className = 'active';
     }
-  }, 3500);
+  }, 3000);
 }
 
 function stopSteps() {
   clearInterval(stepInterval);
-  ['step1','step2','step3','step4','step5','step6'].forEach(s => {
+  ['step1','step2','step3','step4'].forEach(s => {
     document.getElementById(s).className = 'done';
   });
 }
 
+// ── CALL 1: Initial analysis ─────────────────────────────────────────────
 async function runAnalysis() {
   const jobDesc = document.getElementById('job-desc').value.trim();
   const cvText = document.getElementById('cv-text').value.trim();
@@ -566,13 +562,11 @@ async function runAnalysis() {
     errorBox.style.display = 'block';
     return;
   }
-
   if (!cvText && !cvFileInput.files[0]) {
     errorBox.textContent = 'Please upload your CV or paste it as text.';
     errorBox.style.display = 'block';
     return;
   }
-
   if (analysesLeft <= 0) {
     document.getElementById('input-section').style.display = 'none';
     document.getElementById('paywall').style.display = 'block';
@@ -583,18 +577,16 @@ async function runAnalysis() {
   if (!cvContent && cvFileInput.files[0]) {
     try {
       cvContent = await readFileAsText(cvFileInput.files[0]);
-      if (cvContent.startsWith('data:')) {
-        cvContent = '[PDF uploaded. CV text extracted from file: ' + cvFileInput.files[0].name + ']';
-      }
     } catch(e) {
       errorBox.textContent = e.message || 'Could not read the CV file. Please paste your CV as text instead.';
       errorBox.style.display = 'block';
-      document.getElementById('analyse-btn').disabled = false;
-      document.getElementById('loading').style.display = 'none';
-      document.getElementById('input-section').style.display = 'block';
       return;
     }
   }
+
+  // Store for use by Call 2 and Call 3
+  currentJobDesc = jobDesc;
+  currentCvContent = cvContent;
 
   document.getElementById('analyse-btn').disabled = true;
   document.getElementById('input-section').style.display = 'none';
@@ -602,54 +594,17 @@ async function runAnalysis() {
   document.getElementById('results').style.display = 'none';
   animateSteps();
 
-  const prompt = `You are HiredIQ, an honest CV assessment tool built by a former MD with 30 years of hiring experience. Your job is to give candidates the honest truth about their application, not flattery.
-
-Analyse this job application and respond ONLY with valid JSON in exactly this structure:
-
-{
-  "score": <number 0-100>,
-  "verdict": "<one of: Strong Candidate, Borderline, Do Not Apply>",
-  "summary": "<2-3 sentences of honest plain English assessment>",
-  "requirements_met": [
-    {"requirement": "<requirement text>", "evidence": "<evidence from CV>"},
-    ...
-  ],
-  "requirements_missing": [
-    {"requirement": "<requirement text>", "reason": "<why this matters>"},
-    ...
-  ],
-  "cv_rewrite": "<full rewritten CV tailored specifically for this role. Use the candidate's real experience but frame it in the language and emphasis this employer is looking for. Include all standard CV sections.>",
-  "cover_letter": "<a full cover letter written for this specific role and company. Professional, specific, not generic.>",
-  "interview_questions": [
-    "<likely interview question 1>",
-    "<likely interview question 2>",
-    "<likely interview question 3>"
-  ],
-  "salary_context": "<one sentence on what this role typically pays at this level in this location, based on the job description>",
-  "salary_range_low": "<lower end figure with currency>",
-  "salary_range_high": "<upper end figure with currency>"
-}
-
-Be genuinely honest. If the candidate is a poor fit, say so and explain why. Do not inflate scores. A score below 40 means Do Not Apply. 40-65 means Borderline. Above 65 means Strong Candidate.
-
-JOB DESCRIPTION:
-${jobDesc}
-
-CANDIDATE CV:
-${cvContent}
-
-Respond with valid JSON only. No other text before or after.`;
-
   try {
     const response = await fetch('/.netlify/functions/analyse', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ jobDesc, cvContent })
+      body: JSON.stringify({ jobDesc, cvContent, mode: 'analyse' })
     });
 
     if (!response.ok) {
-      const err = await response.json();
-      throw new Error(err.error || 'API error ' + response.status);
+      let errMsg = 'API error ' + response.status;
+      try { const err = await response.json(); errMsg = err.error || errMsg; } catch(e) {}
+      throw new Error(errMsg);
     }
 
     const jsonStr = await response.text();
@@ -659,7 +614,6 @@ Respond with valid JSON only. No other text before or after.`;
     analysesLeft = Math.max(0, analysesLeft - 1);
     localStorage.setItem('hirediq_analyses_left', analysesLeft);
     updateCounter();
-
     displayResults(result);
 
   } catch(err) {
@@ -672,11 +626,121 @@ Respond with valid JSON only. No other text before or after.`;
   }
 }
 
+// ── CALL 2: CV Rewrite + Screening Questions ─────────────────────────────
+async function runRewrite() {
+  const btn = document.getElementById('rewrite-btn');
+  btn.disabled = true;
+  btn.textContent = 'Rewriting...';
+
+  document.getElementById('rewrite-section').style.display = 'block';
+  document.getElementById('rewrite-loading').style.display = 'block';
+  document.getElementById('rewrite-results').style.display = 'none';
+  document.getElementById('rewrite-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    const response = await fetch('/.netlify/functions/analyse', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ jobDesc: currentJobDesc, cvContent: currentCvContent, mode: 'rewrite' })
+    });
+
+    if (!response.ok) {
+      let errMsg = 'API error ' + response.status;
+      try { const err = await response.json(); errMsg = err.error || errMsg; } catch(e) {}
+      throw new Error(errMsg);
+    }
+
+    const jsonStr = await response.text();
+    const result = JSON.parse(jsonStr);
+
+    document.getElementById('rewrite-loading').style.display = 'none';
+    document.getElementById('rewrite-results').style.display = 'block';
+
+    document.getElementById('ats-cv-content').textContent = result.ats_optimised_cv || '';
+    document.getElementById('cv-rewrite-content').textContent = result.cv_rewrite || '';
+
+    const screeningList = document.getElementById('screening-list');
+    screeningList.innerHTML = '';
+    (result.screening_questions || []).forEach((q, i) => {
+      const div = document.createElement('div');
+      div.style.cssText = 'background:var(--light);border:1px solid var(--border);border-radius:10px;padding:1.25rem;border-left:3px solid var(--blue)';
+      div.innerHTML = `
+        <div style="font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);margin-bottom:0.5rem">Question ${i + 1}</div>
+        <div style="font-size:0.95rem;font-weight:600;color:var(--ink);margin-bottom:0.625rem;line-height:1.4">${q.question}</div>
+        <div style="font-size:0.78rem;color:var(--slate);margin-bottom:0.75rem;font-style:italic">${q.why_asked}</div>
+        <div style="font-size:0.75rem;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem">How to Answer</div>
+        <div style="font-size:0.875rem;color:var(--ink3);line-height:1.7">${q.answer_framework}</div>
+      `;
+      screeningList.appendChild(div);
+    });
+
+    btn.textContent = 'CV Rewritten';
+
+  } catch(err) {
+    document.getElementById('rewrite-loading').style.display = 'none';
+    btn.disabled = false;
+    btn.textContent = 'Rewrite My CV + Questions';
+    const errorBox = document.getElementById('error-box');
+    errorBox.textContent = 'CV rewrite failed: ' + err.message + '. Please try again.';
+    errorBox.style.display = 'block';
+  }
+}
+
+// ── CALL 3: Cover Letter ─────────────────────────────────────────────────
+async function runCoverLetter() {
+  const btn = document.getElementById('cover-btn');
+  btn.disabled = true;
+  btn.textContent = 'Generating...';
+
+  document.getElementById('cover-section').style.display = 'block';
+  document.getElementById('cover-loading').style.display = 'block';
+  document.getElementById('cover-results').style.display = 'none';
+  document.getElementById('cover-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    const response = await fetch('/.netlify/functions/analyse', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ jobDesc: currentJobDesc, cvContent: currentCvContent, mode: 'cover_letter' })
+    });
+
+    if (!response.ok) {
+      let errMsg = 'API error ' + response.status;
+      try { const err = await response.json(); errMsg = err.error || errMsg; } catch(e) {}
+      throw new Error(errMsg);
+    }
+
+    const jsonStr = await response.text();
+    const result = JSON.parse(jsonStr);
+
+    document.getElementById('cover-loading').style.display = 'none';
+    document.getElementById('cover-results').style.display = 'block';
+    document.getElementById('cover-letter-content').textContent = result.cover_letter || '';
+
+    btn.textContent = 'Cover Letter Done';
+
+  } catch(err) {
+    document.getElementById('cover-loading').style.display = 'none';
+    btn.disabled = false;
+    btn.textContent = 'Generate Cover Letter';
+    const errorBox = document.getElementById('error-box');
+    errorBox.textContent = 'Cover letter failed: ' + err.message + '. Please try again.';
+    errorBox.style.display = 'block';
+  }
+}
+
 function displayResults(r) {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('results').style.display = 'block';
 
-  // Score ring
+  // Hide rewrite/cover sections from any previous run
+  document.getElementById('rewrite-section').style.display = 'none';
+  document.getElementById('cover-section').style.display = 'none';
+  document.getElementById('rewrite-btn').disabled = false;
+  document.getElementById('rewrite-btn').textContent = 'Rewrite My CV + Questions';
+  document.getElementById('cover-btn').disabled = false;
+  document.getElementById('cover-btn').textContent = 'Generate Cover Letter';
+
   const score = r.score;
   const ring = document.getElementById('score-ring');
   const num = document.getElementById('score-num');
@@ -689,7 +753,6 @@ function displayResults(r) {
     ring.className = 'score-ring low'; num.className = 'score-num low';
   }
 
-  // Verdict badge
   const badge = document.getElementById('verdict-badge');
   const verdictMap = { 'Strong Candidate': 'recommend', 'Borderline': 'consider', 'Do Not Apply': 'pass' };
   badge.className = 'verdict-badge ' + (verdictMap[r.verdict] || 'consider');
@@ -700,7 +763,9 @@ function displayResults(r) {
     : 'You are a borderline candidate. Consider carefully before applying.';
   document.getElementById('score-summary').textContent = r.summary;
 
-  // Requirements met
+  // If Do Not Apply, hide the action bar - no point rewriting
+  document.getElementById('action-bar').style.display = score < 40 ? 'none' : 'flex';
+
   const metList = document.getElementById('met-list');
   metList.innerHTML = '';
   (r.requirements_met || []).forEach(req => {
@@ -710,7 +775,6 @@ function displayResults(r) {
     metList.appendChild(li);
   });
 
-  // Requirements missing
   const missList = document.getElementById('miss-list');
   missList.innerHTML = '';
   (r.requirements_missing || []).forEach(req => {
@@ -720,7 +784,6 @@ function displayResults(r) {
     missList.appendChild(li);
   });
 
-  // ATS keywords present
   const atsPresent = document.getElementById('ats-present');
   atsPresent.innerHTML = '';
   (r.ats_keywords_present || []).forEach(kw => {
@@ -730,7 +793,6 @@ function displayResults(r) {
     atsPresent.appendChild(tag);
   });
 
-  // ATS keywords missing
   const atsMissing = document.getElementById('ats-missing');
   atsMissing.innerHTML = '';
   (r.ats_keywords_missing || []).forEach(kw => {
@@ -740,7 +802,6 @@ function displayResults(r) {
     atsMissing.appendChild(tag);
   });
 
-  // ATS warnings
   const warnings = r.ats_warnings || [];
   if (warnings.length > 0) {
     document.getElementById('ats-warnings-section').style.display = 'block';
@@ -754,32 +815,6 @@ function displayResults(r) {
     });
   }
 
-  // ATS optimised CV
-  document.getElementById('ats-cv-content').textContent = r.ats_optimised_cv || r.cv_rewrite || '';
-
-  // Human CV rewrite
-  document.getElementById('cv-rewrite-content').textContent = r.cv_rewrite || '';
-
-  // Cover letter
-  document.getElementById('cover-letter-content').textContent = r.cover_letter || '';
-
-  // Screening questions
-  const screeningList = document.getElementById('screening-list');
-  screeningList.innerHTML = '';
-  (r.screening_questions || []).forEach((q, i) => {
-    const div = document.createElement('div');
-    div.style.cssText = 'background:var(--light);border:1px solid var(--border);border-radius:10px;padding:1.25rem;border-left:3px solid var(--blue)';
-    div.innerHTML = `
-      <div style="font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);margin-bottom:0.5rem">Question ${i + 1}</div>
-      <div style="font-size:0.95rem;font-weight:600;color:var(--ink);margin-bottom:0.625rem;line-height:1.4">${q.question}</div>
-      <div style="font-size:0.78rem;color:var(--slate);margin-bottom:0.75rem;font-style:italic">${q.why_asked}</div>
-      <div style="font-size:0.75rem;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem">How to Answer</div>
-      <div style="font-size:0.875rem;color:var(--ink3);line-height:1.7">${q.answer_framework}</div>
-    `;
-    screeningList.appendChild(div);
-  });
-
-  // Salary
   const salaryDiv = document.getElementById('salary-content');
   salaryDiv.innerHTML = `
     <div style="display:flex;align-items:center;gap:1rem;padding:0.75rem 0;border-bottom:1px solid var(--border)">
@@ -799,8 +834,9 @@ function copyText(id) {
   const text = document.getElementById(id).textContent;
   navigator.clipboard.writeText(text).then(() => {
     const btn = event.target;
+    const orig = btn.textContent;
     btn.textContent = 'Copied';
-    setTimeout(() => btn.textContent = 'Copy', 2000);
+    setTimeout(() => btn.textContent = orig, 2000);
   });
 }
 
@@ -814,6 +850,7 @@ function resetAnalysis() {
   document.getElementById('upload-text').textContent = 'Drop your CV here or click to upload';
   document.getElementById('file-name').textContent = '';
   uploadArea.classList.remove('has-file');
+  document.getElementById('error-box').style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
